@@ -1,0 +1,97 @@
+# 💍 Liste de Mariage — Meryem & Hamza
+
+Application de liste de cadeaux de mariage avec espace sécurisé pour les mariés.
+
+---
+
+## 🔐 Code secret des mariés
+```
+MeryemHamza2025
+```
+*(Vous pouvez le changer dans `src/App.jsx` ligne 12)*
+
+---
+
+## 🚀 Mise en ligne en 4 étapes
+
+### ÉTAPE 1 — Créer la base de données Firebase (gratuit)
+
+1. Allez sur **https://console.firebase.google.com**
+2. Cliquez **"Créer un projet"**
+3. Donnez un nom : `mariage-meryem-hamza` → Continuer → Créer
+4. Dans le menu gauche, cliquez **"Firestore Database"**
+5. Cliquez **"Créer une base de données"**
+6. Choisissez **"Démarrer en mode test"** → Suivant → Activer
+7. Dans le menu gauche, cliquez l'icône ⚙️ **"Paramètres du projet"**
+8. Descendez jusqu'à **"Vos applications"**, cliquez **`</>`** (Web)
+9. Donnez un nom : `liste-mariage` → **Enregistrer l'application**
+10. Copiez le bloc `firebaseConfig` qui apparaît
+
+### ÉTAPE 2 — Configurer l'application
+
+Ouvrez le fichier **`src/firebase.js`** et remplacez les valeurs :
+
+```js
+const firebaseConfig = {
+  apiKey: "AIzaSy...",           // ← votre valeur
+  authDomain: "mariage-xxx.firebaseapp.com",
+  projectId: "mariage-xxx",
+  storageBucket: "mariage-xxx.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abc..."
+}
+```
+
+### ÉTAPE 3 — Déployer sur Vercel (gratuit)
+
+1. Allez sur **https://github.com** → créez un compte si besoin
+2. Créez un **nouveau dépôt** (repository) : `liste-mariage`
+3. Uploadez tous les fichiers de ce dossier
+4. Allez sur **https://vercel.com** → connectez-vous avec GitHub
+5. Cliquez **"New Project"** → importez votre dépôt
+6. Laissez les paramètres par défaut → **"Deploy"**
+7. Vercel vous donne une URL comme `liste-mariage.vercel.app` ✨
+
+### ÉTAPE 4 — Partagez le lien avec vos invités !
+
+Envoyez l'URL à vos invités. Eux voient la liste des cadeaux.
+Vous, les mariés, cliquez "Espace mariés" et entrez le code secret.
+
+---
+
+## 📁 Structure du projet
+
+```
+wedding-app/
+├── index.html
+├── package.json
+├── vite.config.js
+├── src/
+│   ├── main.jsx
+│   ├── App.jsx        ← application principale
+│   └── firebase.js    ← ⚠️ à configurer
+└── README.md
+```
+
+---
+
+## ✨ Fonctionnalités
+
+- 🏠 Page d'accueil aux couleurs bleu/violet avec les prénoms Meryem & Hamza
+- 🔐 Espace mariés protégé par code secret
+- 🎁 Ajout/suppression de cadeaux (emoji, prix, catégorie, description)
+- 👥 Vue invités avec filtres par catégorie
+- ✅ Réservation en 1 clic → le cadeau disparaît pour les autres invités
+- 📊 Statistiques en temps réel pour les mariés
+- 🔄 Synchronisation temps réel via Firebase
+
+---
+
+## 🛠️ Développement local (optionnel)
+
+```bash
+npm install
+npm run dev
+```
+
+Ouvre `http://localhost:5173`
