@@ -21,34 +21,14 @@ const DEFAULT_GIFTS = [
 
 async function extractProductFromUrl(url) {
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/fetch-product', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{
-          role: 'user',
-          content: `Visite cette page produit : ${url}
-Extrais les informations suivantes et réponds UNIQUEMENT en JSON valide, sans texte avant ou après :
-{
-  "name": "nom du produit",
-  "description": "description courte (max 100 caractères)",
-  "price": 0,
-  "image": "url directe de la photo principale du produit"
-}
-Si tu ne trouves pas une valeur, mets "" ou 0. Le prix doit être un nombre sans symbole monétaire.`
-        }]
-      })
+      body: JSON.stringify({ url })
     })
     const data = await response.json()
-    const text = data.content?.filter(b => b.type === 'text').map(b => b.text).join('') || ''
-    const clean = text.replace(/```json|```/g, '').trim()
-    const start = clean.indexOf('{')
-    const end = clean.lastIndexOf('}')
-    if (start === -1 || end === -1) throw new Error('No JSON')
-    return JSON.parse(clean.slice(start, end + 1))
+    if (data.error) throw new Error(data.error)
+    return data
   } catch (e) {
     console.error(e)
     return null
