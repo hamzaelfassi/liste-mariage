@@ -8,7 +8,6 @@ import { db } from './firebase'
 const COUPLE_CODE = 'MeryemHamza2025'
 
 const CATEGORIES = ['Cuisine', 'Déco', 'Voyage', 'Salle de bain', 'Chambre', 'Autre']
-const EMOJIS = ['🎁','🍽️','🥣','🖼️','🏨','🍷','🛁','📚','🌸','💎','✈️','🏡','🎨','🎵','🌿','💐','🕯️','🪴','☕','🫶']
 
 const DEFAULT_GIFTS = [
   { name: 'Service de vaisselle', description: '12 personnes, porcelaine blanche', price: 280, category: 'Cuisine', emoji: '🍽️', url: '', image: '' },
@@ -184,8 +183,6 @@ export default function App() {
         .tag { display:inline-block; padding:3px 11px; border-radius:20px; font-size:11px; font-weight:700; background:var(--bg2); color:var(--primary); }
         .filter-btn { padding:7px 16px; border-radius:20px; cursor:pointer; font-family:Nunito,sans-serif; font-size:13px; font-weight:700; border:1.5px solid #dddaf5; background:white; color:var(--text2); transition:all 0.2s; }
         .filter-btn.active { border-color:var(--primary); background:var(--bg2); color:var(--primary); }
-        .emoji-btn { width:38px; height:38px; border-radius:10px; border:2px solid transparent; cursor:pointer; font-size:18px; background:var(--bg); transition:all 0.15s; }
-        .emoji-btn:hover, .emoji-btn.sel { border-color:var(--primary); background:var(--bg2); }
         .modal-overlay { position:fixed; inset:0; background:rgba(45,43,78,0.45); display:flex; align-items:center; justify-content:center; z-index:1000; backdrop-filter:blur(6px); }
         .modal { background:white; border-radius:28px; padding:36px; max-width:440px; width:92%; animation:fadeUp 0.3s ease; max-height:90vh; overflow-y:auto; }
         .notif { position:fixed; bottom:32px; left:50%; transform:translateX(-50%); background:var(--text); color:white; padding:14px 28px; border-radius:50px; font-size:14px; font-weight:600; z-index:2000; animation:slideDown 0.3s ease; box-shadow:0 8px 30px rgba(45,43,78,0.25); white-space:nowrap; }
