@@ -53,6 +53,7 @@ export default function App() {
   const [urlError, setUrlError] = useState('')
   const [reserveModal, setReserveModal] = useState(null)
   const [guestName, setGuestName] = useState('')
+  const [guestMessage, setGuestMessage] = useState('')
   const [filterCat, setFilterCat] = useState('Tout')
   const [notif, setNotif] = useState(null)
   const [fbError, setFbError] = useState(false)
