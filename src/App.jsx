@@ -120,10 +120,15 @@ export default function App() {
   const reserveGift = async () => {
     if (!guestName.trim() || !reserveModal) return
     try {
-      await updateDoc(doc(db, 'gifts', reserveModal), { reserved: true, reservedBy: guestName.trim() })
+      await updateDoc(doc(db, 'gifts', reserveModal), {
+        reserved: true,
+        reservedBy: guestName.trim(),
+        guestMessage: guestMessage.trim()
+      })
       setReserveModal(null)
       const name = guestName.trim()
       setGuestName('')
+      setGuestMessage('')
       showNotif(`✨ Merci ${name} ! Cadeau réservé avec amour 💜`)
     } catch (e) { console.error(e) }
   }
@@ -328,8 +333,9 @@ export default function App() {
                       <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: 'var(--text)', fontWeight: 600 }}>{gift.name}</span>
                       <span className="tag">{gift.category}</span>
                       {gift.reserved && <span style={{ fontSize: 12, background: '#d4f0d4', color: '#2a7a2a', padding: '2px 10px', borderRadius: 20, fontWeight: 700 }}>✓ {gift.reservedBy}</span>}
-                    </div>
-                    {gift.description && <p style={{ color: 'var(--text2)', fontSize: 13 }}>{gift.description}</p>}
+                  </div>
+                  {gift.description && <p style={{ color: 'var(--text2)', fontSize: 13 }}>{gift.description}</p>}
+                  {gift.guestMessage && <p style={{ color: 'var(--primary)', fontSize: 13, fontStyle: 'italic', marginTop: 4 }}>💌 "{gift.guestMessage}"</p>}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4 }}>
                       {gift.price > 0 && <span style={{ color: 'var(--primary)', fontWeight: 700, fontSize: 15 }}>{gift.price} DH</span>}
                       {gift.url && <a href={gift.url} target="_blank" rel="noreferrer" style={{ color: 'var(--primary-light)', fontSize: 12, textDecoration: 'none' }} onClick={e => e.stopPropagation()}>🔗 Voir le produit</a>}
@@ -419,23 +425,32 @@ export default function App() {
         return (
           <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setReserveModal(null)}>
             <div className="modal">
-              <div style={{ textAlign: 'center', marginBottom: 24 }}>
-                {gift.image
-                  ? <img src={gift.image} alt={gift.name} style={{ width: '100%', height: 200, objectFit: 'cover', borderRadius: 16, marginBottom: 16 }} onError={e => e.target.style.display = 'none'} />
-                  : <div style={{ fontSize: 58, marginBottom: 12 }}>{gift.emoji}</div>
-                }
-                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 24, color: 'var(--text)', marginBottom: 6 }}>{gift.name}</h3>
-                {gift.price > 0 && <p style={{ color: 'var(--primary)', fontWeight: 700, fontSize: 22, marginBottom: 6 }}>{gift.price} DH</p>}
-                {gift.description && <p style={{ color: 'var(--text2)', fontSize: 14, marginBottom: 6 }}>{gift.description}</p>}
-                {gift.url && <a href={gift.url} target="_blank" rel="noreferrer" style={{ color: 'var(--primary-light)', fontSize: 13, display: 'block', marginBottom: 4 }}>🔗 Voir le produit en ligne</a>}
+              <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                <div style={{ fontSize: 52, marginBottom: 10 }}>{gift.emoji}</div>
+                <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, color: 'var(--text)', marginBottom: 4 }}>{gift.name}</h3>
+                {gift.price > 0 && <p style={{ color: 'var(--primary)', fontWeight: 700, fontSize: 20, marginBottom: 4 }}>{gift.price} DH</p>}
+                {gift.description && <p style={{ color: 'var(--text2)', fontSize: 13 }}>{gift.description}</p>}
               </div>
-              <p style={{ color: 'var(--text2)', fontSize: 15, textAlign: 'center', lineHeight: 1.6, marginBottom: 20 }}>
-                Entrez votre prénom pour que Meryem & Hamza sachent que c'est vous 💜
-              </p>
-              <input className="input" placeholder="Votre prénom ou nom" value={guestName} onChange={e => setGuestName(e.target.value)} onKeyDown={e => e.key === 'Enter' && reserveGift()} style={{ marginBottom: 16 }} autoFocus />
+
+              {/* Adresse de livraison */}
+              <div style={{ background: 'var(--bg2)', borderRadius: 14, padding: '12px 16px', marginBottom: 20, borderLeft: '3px solid var(--primary-light)' }}>
+                <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--primary)', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 0.5 }}>📦 Adresse de livraison</p>
+                <p style={{ fontSize: 13, color: 'var(--text)', lineHeight: 1.6 }}>
+                  23 Résidence ENNAKHIL<br />
+                  Avenue Tarik Ibn Zayad<br />
+                  13150 Témara
+                </p>
+              </div>
+
+              <input className="input" placeholder="Votre prénom ou nom *" value={guestName} onChange={e => setGuestName(e.target.value)} style={{ marginBottom: 12 }} autoFocus />
+              <textarea className="input" placeholder="Un petit message pour Meryem & Hamza 💜 (optionnel)" value={guestMessage} onChange={e => setGuestMessage(e.target.value)}
+                style={{ marginBottom: 16, resize: 'none', height: 80, fontFamily: 'Nunito, sans-serif' }} />
+
               <div style={{ display: 'flex', gap: 12 }}>
-                <button className="btn btn-outline" onClick={() => setReserveModal(null)} style={{ flex: 1 }}>Annuler</button>
-                <button className="btn btn-primary" onClick={reserveGift} style={{ flex: 2 }} disabled={!guestName.trim()}>🎁 Je réserve !</button>
+                <button className="btn btn-outline" onClick={() => { setReserveModal(null); setGuestMessage('') }} style={{ flex: 1 }}>Annuler</button>
+                <button className="btn btn-primary" onClick={reserveGift} style={{ flex: 2 }} disabled={!guestName.trim()}>
+                  🎁 Je réserve !
+                </button>
               </div>
             </div>
           </div>
