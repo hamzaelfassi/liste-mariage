@@ -8,7 +8,7 @@ import { db } from './firebase'
 const COUPLE_CODE = 'MeryemHamza2025'
 
 const CATEGORIES = ['Cuisine', 'Déco', 'Voyage', 'Salle de bain', 'Chambre', 'Autre']
-
+const EMOJIS = ['🎁','🍽️','🥣','🖼️','🏨','🍷','🛁','📚','🌸','💎','✈️','🏡','🎨','🎵','🌿','💐','🕯️','🪴','☕','🫶']
 
 const DEFAULT_GIFTS = [
   { name: 'Service de vaisselle', description: '12 personnes, porcelaine blanche', price: 280, category: 'Cuisine', emoji: '🍽️', url: '', image: '' },
