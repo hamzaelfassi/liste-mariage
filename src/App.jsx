@@ -9,15 +9,6 @@ const COUPLE_CODE = 'MeryemHamza2025'
 
 const CATEGORIES = ['Cuisine', 'Déco', 'Voyage', 'Salle de bain', 'Chambre', 'Autre']
 
-const DEFAULT_GIFTS = [
-  { name: 'Service de vaisselle', description: '12 personnes, porcelaine blanche', price: 280, category: 'Cuisine', emoji: '🍽️', url: '', image: '' },
-  { name: 'Robot culinaire', description: 'KitchenAid artisan 4.8L', price: 450, category: 'Cuisine', emoji: '🥣', url: '', image: '' },
-  { name: 'Cadre photo personnalisé', description: 'Bois gravé avec nos prénoms', price: 60, category: 'Déco', emoji: '🖼️', url: '', image: '' },
-  { name: 'Nuit d\'hôtel romantique', description: 'Suite pour 2 personnes', price: 200, category: 'Voyage', emoji: '🏨', url: '', image: '' },
-  { name: 'Cave à vin', description: '36 bouteilles, température réglable', price: 350, category: 'Cuisine', emoji: '🍷', url: '', image: '' },
-  { name: 'Linge de bain de luxe', description: 'Coffret 6 serviettes égyptiennes', price: 90, category: 'Salle de bain', emoji: '🛁', url: '', image: '' },
-]
-
 async function extractProductFromUrl(url) {
   try {
     const response = await fetch('/api/fetch-product', {
@@ -130,13 +121,6 @@ export default function App() {
       setGuestMessage('')
       showNotif(`✨ Merci ${name} ! Cadeau réservé avec amour 💜`)
     } catch (e) { console.error(e) }
-  }
-
-  const seedDefaults = async () => {
-    for (const g of DEFAULT_GIFTS) {
-      await addDoc(collection(db, 'gifts'), { ...g, reserved: false, reservedBy: '', createdAt: Date.now() })
-    }
-    showNotif('Cadeaux exemples ajoutés !')
   }
 
   const availableGifts = gifts.filter(g => !g.reserved)
@@ -300,7 +284,6 @@ export default function App() {
                 </select>
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button className="btn btn-primary" onClick={addGift} disabled={!newGift.name.trim()}>Ajouter</button>
-                  {gifts.length === 0 && <button className="btn btn-outline" onClick={seedDefaults}>Ajouter des exemples</button>}
                 </div>
               </div>
             </div>
@@ -310,7 +293,6 @@ export default function App() {
             <div style={{ textAlign: 'center', padding: '40px 20px' }}>
               <div style={{ fontSize: 48, marginBottom: 16 }}>🎁</div>
               <p style={{ color: 'var(--text2)', marginBottom: 20 }}>Votre liste est vide. Ajoutez votre premier cadeau !</p>
-              <button className="btn btn-outline" onClick={seedDefaults}>Ajouter des exemples pour commencer</button>
             </div>
           )}
 
