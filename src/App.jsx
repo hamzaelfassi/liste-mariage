@@ -28,7 +28,12 @@ async function extractProductFromUrl(url) {
     })
     const data = await response.json()
     if (data.error) throw new Error(data.error)
-    return data
+    return {
+      name: data.name || '',
+      description: data.description || '',
+      price: data.price || 0,
+      image: data.image || ''
+    }
   } catch (e) {
     console.error(e)
     return null
