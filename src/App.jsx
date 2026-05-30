@@ -298,11 +298,6 @@ export default function App() {
                 <select className="input" value={newGift.category} onChange={e => setNewGift({ ...newGift, category: e.target.value })}>
                   {CATEGORIES.map(c => <option key={c}>{c}</option>)}
                 </select>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, padding: '10px 12px', background: 'var(--bg)', borderRadius: 12 }}>
-                  {EMOJIS.map(e => (
-                    <button key={e} className={`emoji-btn ${newGift.emoji === e ? 'sel' : ''}`} onClick={() => setNewGift({ ...newGift, emoji: e })}>{e}</button>
-                  ))}
-                </div>
                 <div style={{ display: 'flex', gap: 12 }}>
                   <button className="btn btn-primary" onClick={addGift} disabled={!newGift.name.trim()}>Ajouter</button>
                   {gifts.length === 0 && <button className="btn btn-outline" onClick={seedDefaults}>Ajouter des exemples</button>}
