@@ -371,7 +371,7 @@ export default function App() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
             {filteredGifts.map((gift, i) => (
-              <div key={gift.id} className="gift-card" style={{ animationDelay: `${i * 0.06}s`, padding: 0, overflow: 'hidden' }} onClick={() => setReserveModal(gift.id)}>
+              <div key={gift.id} className="gift-card" style={{ animationDelay: `${i * 0.06}s`, padding: 0, overflow: 'hidden' }}>       
                 {gift.image
                   ? <img src={gift.image} alt={gift.name} style={{ width: '100%', height: 180, objectFit: 'cover' }} onError={e => e.target.style.display = 'none'} />
                   : <div style={{ height: 80, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 48, background: 'var(--bg)' }}>{gift.emoji}</div>
@@ -382,9 +382,12 @@ export default function App() {
                     <span className="tag">{gift.category}</span>
                   </div>
                   {gift.description && <p style={{ color: 'var(--text2)', fontSize: 13, lineHeight: 1.5, marginBottom: 8 }}>{gift.description}</p>}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 8, gap: 8 }}>
                     {gift.price > 0 && <span style={{ color: 'var(--primary)', fontWeight: 700, fontSize: 18 }}>{gift.price} DH</span>}
-                    <span style={{ color: 'var(--primary)', fontWeight: 700, fontSize: 13, marginLeft: 'auto' }}>Offrir ce cadeau →</span>
+                    <div style={{ display: 'flex', gap: 8, marginLeft: 'auto' }}>
+                      {gift.url && <a href={gift.url} target="_blank" rel="noreferrer" style={{ color: 'var(--text2)', fontWeight: 700, fontSize: 13, textDecoration: 'none', padding: '6px 14px', border: '1.5px solid #dddaf5', borderRadius: 20 }} onClick={e => e.stopPropagation()}>🔗 Voir</a>}
+                      <button onClick={() => setReserveModal(gift.id)} style={{ background: 'var(--primary)', color: 'white', border: 'none', borderRadius: 20, padding: '6px 14px', fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'Nunito, sans-serif' }}>🎁 Réserver</button>
+                    </div>
                   </div>
                 </div>
               </div>
