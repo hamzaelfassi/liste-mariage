@@ -107,6 +107,17 @@ export default function App() {
     catch (e) { console.error(e) }
   }
 
+  const releaseGift = async (id) => {
+    try {
+      await updateDoc(doc(db, 'gifts', id), {
+        reserved: false,
+        reservedBy: '',
+        guestMessage: ''
+      })
+      showNotif('🔓 Réservation annulée')
+    } catch (e) { console.error(e) }
+  }
+
   const reserveGift = async () => {
     if (!guestName.trim() || !reserveModal) return
     try {
@@ -306,8 +317,13 @@ export default function App() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 2 }}>
                       <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 18, color: 'var(--text)', fontWeight: 600 }}>{gift.name}</span>
                       <span className="tag">{gift.category}</span>
-                      {gift.reserved && <span style={{ fontSize: 12, background: '#d4f0d4', color: '#2a7a2a', padding: '2px 10px', borderRadius: 20, fontWeight: 700 }}>✓ {gift.reservedBy}</span>}
-                  </div>
+                      {gift.reserved && (
+  <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+    <span style={{ fontSize: 12, background: '#d4f0d4', color: '#2a7a2a', padding: '2px 10px', borderRadius: 20, fontWeight: 700 }}>✓ {gift.reservedBy}</span>
+    <button onClick={() => releaseGift(gift.id)} style={{ fontSize: 11, background: '#fff0f0', color: '#e17055', border: '1px solid #fab1a0', borderRadius: 20, padding: '2px 10px', cursor: 'pointer', fontWeight: 700, fontFamily: 'Nunito, sans-serif' }}>🔓 Libérer</button>
+  </span>
+)}      
+                    </div>
                   {gift.description && <p style={{ color: 'var(--text2)', fontSize: 13 }}>{gift.description}</p>}
                   {gift.guestMessage && <p style={{ color: 'var(--primary)', fontSize: 13, fontStyle: 'italic', marginTop: 4 }}>💌 "{gift.guestMessage}"</p>}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4 }}>
